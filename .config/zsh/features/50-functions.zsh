@@ -21,6 +21,11 @@ hip() {
 #========# Dotfiles Management #===========================#
 #==========================================================#
 
+# Legacy Spartan-Arch dotfiles git command (pre-hyprdots migration)
+dotf() {
+    /usr/bin/git --git-dir="${HOME}/.dotfiles-spartan-arch/" --work-tree="${HOME}" "$@"
+}
+
 # List all untracked files recursively, no filtering
 dotua() {
     dotu '*/*'

@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Waybar Debug Helper
+# Quick debugging tool for waybar issues
+
+echo "=== Waybar Debug Information ==="
+echo "Date: $(date)"
+echo ""
+
+echo "Service Status:"
+systemctl --user status waybar.service --no-pager -l 2>/dev/null || echo "Service not found"
+echo ""
+
+echo "Recent Logs (last 10 lines):"
+journalctl --user -u waybar.service -n 10 --no-pager 2>/dev/null || echo "No logs available"
+echo ""
+
+echo "Configuration Test:"
+if [[ -f "$HOME/.config/waybar/config" ]]; then
+    echo "Config file exists: ✓"
+    # Basic JSON syntax check
+    if python3 -m json.tool "$HOME/.config/waybar/config" >/dev/null 2>&1; then
+        echo "JSON syntax valid: ✓"
+    else
+        echo "JSON syntax error: ✗"
+        echo "Try: python3 -m json.tool ~/.config/waybar/config"
+    fi
+else
+    echo "Config file missing: ✗"
+fi
+echo ""
+
+echo "System Status Script Test:"
+if [[ -x "$HOME/.config/hypr/scripts/system/monitoring/waybar_system_status.sh" ]]; then
+    echo "Script exists and executable: ✓"
+    echo "Test output:"
+    "$HOME/.config/hypr/scripts/system/monitoring/waybar_system_status.sh" status 2>&1 || echo "Script execution failed"
+else
+    echo "Script missing or not executable: ✗"
+fi

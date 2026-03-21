@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+######################################################
+#              XDG-OPEN WRAPPER
+#           FOR HYPRLAND + KDE THEMING
+######################################################
+# ~/.local/bin/xdg-open
+#
+# Wrapper script that ensures xdg-open works correctly in Hyprland
+# while preserving KDE theming variables for applications that need them
+#
+# This script masks the KDE session variables specifically for xdg-open's
+# desktop environment detection, allowing proper link handling while
+# keeping KDE app theming intact for the rest of the session.
+#
+# Last Updated: 2025-08-20
+
+# Ensure we're calling the real xdg-open, not ourselves
+readonly REAL_XDG_OPEN="/usr/bin/xdg-open"
+
+# Verify the real xdg-open exists
+if [[ ! -x "$REAL_XDG_OPEN" ]]; then
+    echo "Error: Real xdg-open not found at $REAL_XDG_OPEN" >&2
+    exit 1
+fi
+
+# Execute xdg-open with Hyprland-specific environment
+# This masks KDE session detection while preserving other environment variables
+exec env \
+    -u KDE_SESSION_VERSION \
+    -u KDE_FULL_SESSION \
+    XDG_CURRENT_DESKTOP="Hyprland" \
+    DESKTOP_SESSION="Hyprland" \
+    XDG_SESSION_DESKTOP="Hyprland" \
+    "$REAL_XDG_OPEN" "$@"

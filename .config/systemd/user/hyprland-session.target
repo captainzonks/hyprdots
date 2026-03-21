@@ -1,0 +1,12 @@
+[Unit]
+Description=Hyprland Session Services
+After=graphical-session.target
+BindsTo=graphical-session.target
+StopWhenUnneeded=true
+
+# Ensure clean shutdown order
+Conflicts=shutdown.target reboot.target halt.target
+Before=shutdown.target reboot.target halt.target
+
+[Install]
+WantedBy=graphical-session.target

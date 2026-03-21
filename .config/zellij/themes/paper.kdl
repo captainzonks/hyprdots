@@ -1,0 +1,35 @@
+// Paper - Minimal monochromatic theme for Zellij
+// Inspired by paper, parchment, and minimal design
+//
+// Philosophy: Zellij provides the frame, the terminal content provides the color.
+// This theme uses cream and warm gray tones exclusively, creating a neutral
+// backdrop that doesn't compete with syntax highlighting, starship prompts,
+// or colorized terminal output from tools like lsd, bat, etc.
+//
+// Color palette:
+// - bg:      #1d1d1d - Charcoal paper (dark warm gray)
+// - fg:      #e8dcc4 - Aged cream (warm off-white, like old paper)
+// - black:   #2a2a2a - Slightly lighter charcoal
+// - white:   #e8dcc4 - Same as fg for consistency
+//
+// All other colors use subtle warm grays to minimize visual noise:
+// - Grays range from #3a3a3a to #9a9a8a
+// - Slight warmth (tiny bit of yellow/brown) keeps it from feeling cold
+// - High contrast between bg and fg ensures readability
+// - UI elements blend into the background
+
+themes {
+    paper {
+        fg "#e8dcc4"
+        bg "#1d1d1d"
+        black "#2a2826"
+        red "#6a6864"
+        green "#7a7874"
+        yellow "#8a8884"
+        blue "#6a6864"
+        magenta "#7a7874"
+        cyan "#8a8884"
+        white "#e8dcc4"
+        orange "#9a9890"
+    }
+}

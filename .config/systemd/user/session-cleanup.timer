@@ -1,0 +1,21 @@
+# ~/.config/systemd/user/session-cleanup.timer
+# Timer to run session maintenance periodically
+
+[Unit]
+Description=Session Health Maintenance Timer
+Documentation=man:systemd.timer(5)
+Requires=session-cleanup.service
+
+[Timer]
+# Run every 30 minutes
+OnBootSec=10min
+OnUnitActiveSec=30min
+
+# Don't wake up the system
+WakeSystem=false
+
+# Randomize timing to prevent resource spikes
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

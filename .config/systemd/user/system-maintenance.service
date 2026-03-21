@@ -1,0 +1,14 @@
+[Unit]
+Description=Weekly System Maintenance (Fixed)
+Documentation=file:///home/barhamm/.config/hypr/scripts/system/diagnostics/system_maintenance.sh
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/barhamm/.config/hypr/scripts/system/diagnostics/system_maintenance.sh --auto
+Environment=HOME=/home/barhamm
+Environment=USER=barhamm
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+StandardOutput=journal
+StandardError=journal
+TimeoutStartSec=300

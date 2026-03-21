@@ -27,6 +27,11 @@ alias zugins='him "$XDG_CONFIG_HOME/zsh/features/70-plugins.zsh"'
 
 #----- Zellij
 alias engage='eval "$(zellij setup --generate-auto-start zsh)"'
+alias pds='pdsync.sh --cleanup'
+alias pdu='pds -u'
+alias pdd='pds -D'
+alias pdbi='pds'
+alias pdresync='pds --resync'
 
 #----- Basic Commands
 alias cd='z'
@@ -44,6 +49,7 @@ alias pclean='paru -Scc'
 alias pacnew='DIFFPROG=meld pacdiff -s'
 
 #----- Apps
+alias wakearg='~/.local/bin/wake_argonaut.sh'
 alias ff='fastfetch'
 
 alias jqs='jq -CR --stream --unbuffered .'
@@ -59,20 +65,6 @@ alias tosvg='uv run https://raw.githubusercontent.com/nicobailon/png2svg/main/pn
 #==========================================================#
 export HYPR_CONFIG_HOME=${XDG_CONFIG_HOME}/hypr
 alias hdir="cd ${HYPR_CONFIG_HOME}"
-
-#GUI Applications
-
-#----- Compositors
-alias niri='systemctl --user start niri.service'
-
-#----- Terminal Emulator
-alias foot='footclient'
-
-#----- Game Dev
-alias parsim='godot repos/particle-simulation/godot_project/project.godot'
-
-#----- Games
-alias gamehdr='gamescope -W 3840 -H 2160 -f --hdr-enabled -- steam -gamepadui'
 
 #========# App Helpers #===================================#
 #==========================================================#

@@ -1,0 +1,25 @@
+#==========================================================#
+#                   SWAYBG WALLPAPER SERVICE              #
+#==========================================================#
+# File: swaybg.service
+# Purpose: Wallpaper daemon replacing hyprpaper (broken IPC with Hyprland 0.54.2)
+# Last Updated: 2026-03-20
+#==========================================================#
+# Static wallpaper — no rotation or dynamic color generation.
+
+[Unit]
+Description=Swaybg wallpaper daemon for Hyprland
+Documentation=man:swaybg(1)
+After=wayland-session@hyprland.desktop.target
+PartOf=wayland-session@hyprland.desktop.target
+
+[Service]
+Type=exec
+Environment=SWAYBG_IMAGE=%h/Pictures/wallpapers/2560x1440-dark-archlinux.png
+ExecStart=/usr/bin/swaybg -i ${SWAYBG_IMAGE} -m fill
+Restart=on-failure
+RestartSec=2
+Slice=background-graphical.slice
+
+[Install]
+WantedBy=wayland-session@hyprland.desktop.target

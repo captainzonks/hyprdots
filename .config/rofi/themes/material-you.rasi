@@ -1,0 +1,79 @@
+/**
+ * Material You theme for Rofi
+ * Generated from wallpaper colors via matugen
+ * Based on Material Design 3 principles
+ */
+
+@import "~/.config/rofi/colors.rasi"
+
+* {
+    background-color: @background;
+}
+
+window {
+    height: 600;
+    width: 600;
+    border: 2;
+    border-radius: 12;
+    border-color: @selected;
+    background-color: @background;
+}
+
+mainbox {
+    spacing: 0;
+    children: [inputbar, message, listview];
+    background-color: @background;
+}
+
+inputbar {
+    color: @foreground;
+    padding: 14;
+    background-color: @background-alt;
+    border-radius: 12 12 0 0;
+}
+
+entry {
+    placeholder: "Search...";
+    placeholder-color: @foreground;
+}
+
+message {
+    padding: 10;
+    background-color: @background-alt;
+    text-color: @foreground;
+}
+
+listview {
+    padding: 8;
+    border-radius: 0 0 12 12;
+    border: 0;
+    background-color: @background;
+    scrollbar: true;
+}
+
+scrollbar {
+    handle-color: @selected;
+    handle-width: 8;
+    background-color: @background-alt;
+}
+
+element {
+    padding: 8;
+    border-radius: 8;
+    text-color: @foreground;
+}
+
+element selected {
+    background-color: @selected;
+    text-color: @background;
+}
+
+element-text {
+    background-color: inherit;
+    text-color: inherit;
+}
+
+element-icon {
+    size: 24;
+    background-color: inherit;
+}

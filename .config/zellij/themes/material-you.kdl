@@ -1,0 +1,15 @@
+themes {
+	material-you {
+		fg "#f1dfdc"
+		bg "#1a1110"
+		black "#3d3231"
+		red "#ffb4ab"
+		green "#dec48c"
+		yellow "#564419"
+		blue "#ffb4a8"
+		magenta "#e7bdb6"
+		cyan "#ffb4a8"
+		white "#f1dfdc"
+		orange "#73342b"
+	}
+}

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Waybar Quick Fix
+# Restarts waybar and shows status
+
+echo "Restarting waybar service..."
+systemctl --user restart waybar.service
+
+echo "Waiting for startup..."
+sleep 3
+
+echo "Service status:"
+systemctl --user status waybar.service --no-pager -n 5
+
+echo ""
+echo "If issues persist, run: waybar-debug"

@@ -1,0 +1,25 @@
+# ~/.config/systemd/user/session-cleanup.service
+# User service to help maintain session health
+# This service runs periodically to prevent session scope buildup
+
+[Unit]
+Description=Session Health Maintenance
+Documentation=man:systemd.service(5)
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c 'systemctl --user reset-failed 2>/dev/null || true'
+
+# Only run if we have active sessions
+ExecCondition=/bin/bash -c '[[ -n "$(loginctl list-sessions --no-legend)" ]]'
+
+# Low resource usage
+IOSchedulingClass=3
+Nice=15
+
+# Security
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=default.target

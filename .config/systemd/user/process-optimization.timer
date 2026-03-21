@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Process Optimization Every 5 Minutes
+Requires=process-optimization.service
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,27 @@
+# ~/.config/uwsm/env-moonlight
+# Environment variables to fix Moonlight Wayland syncobj issues
+# Source this in your main UWSM env or shell profile
+
+# Fix for wp_linux_drm_syncobj_surface_v1 buffer errors
+# These settings resolve the "Missing buffer" Wayland protocol error
+
+# Option 1: Force VAAPI instead of Vulkan (recommended)
+# This keeps Wayland benefits while avoiding Vulkan syncobj issues
+export FORCE_VAAPI=1
+export LIBVA_DRIVER_NAME=radeonsi
+
+# Option 2: If you prefer Vulkan, use safe settings
+# Uncomment these instead of VAAPI settings above:
+# export MESA_VK_WSI_PRESENT_MODE=immediate
+# export RADV_DEBUG=nosyncobj
+
+# Option 3: For maximum compatibility, force X11
+# Uncomment this line to always use X11 for Moonlight:
+# export QT_QPA_PLATFORM=xcb
+
+# Additional AMD optimizations for streaming
+export RADV_PERFTEST=gpl
+export MESA_LOADER_DRIVER_OVERRIDE=radeonsi
+
+# Moonlight-specific optimizations
+export SDL_VIDEODRIVER=wayland,x11  # Fallback order

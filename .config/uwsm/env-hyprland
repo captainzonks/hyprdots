@@ -1,0 +1,28 @@
+# ~/.config/uwsm/env-hyprland
+# Hyprland-specific environment variables
+# UWSM documentation: https://github.com/Vladimir-csp/uwsm
+# Hyprland wiki: https://wiki.hyprland.org/Configuring/Environment-variables/
+
+#============= HYPRLAND SPECIFIC ================#
+# Hyprland tracing for debugging (disable in production)
+# export HYPRLAND_TRACE=1
+
+# Aquamarine (Hyprland's rendering library) tracing
+# export AQ_TRACE=1
+
+# Hypr cursor configuration
+export HYPRCURSOR_SIZE=24
+
+#============= SCREENSHOT TOOLS =================#
+# Hyprshot configuration
+export HYPRSHOT_DIR="$HOME/Pictures/screenshots"
+
+#============= PERFORMANCE TUNING ==============#
+# GPU/Rendering optimizations for laptops
+# Hyprland rendering backend selection
+export WLR_RENDERER="vulkan"  # Use Vulkan if available, fallback to gles2
+
+# export WLR_NO_HARDWARE_CURSORS="1" # conflict w/ Hyprland v0.50.0's new cursor handling
+
+# Memory and performance optimizations
+export WLR_DRM_NO_ATOMIC="1"  # Can help with Intel integrated graphics

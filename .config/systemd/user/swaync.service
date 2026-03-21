@@ -1,0 +1,59 @@
+# ~/.config/systemd/user/swaync.service
+# SwayNC notification daemon systemd service
+
+[Unit]
+Description=SwayNC notification daemon
+Documentation=man:swaync(1) https://github.com/ErikReider/SwayNotificationCenter
+
+# SIMPLIFIED DEPENDENCIES - avoid cycles with graphical-session.target
+After=graphical-session-pre.target
+PartOf=default.target
+
+# Audio dependency for notification sounds (optional)
+After=pipewire.service pipewire-pulse.service
+
+# Conflict management - ensure no other notification daemons
+Conflicts=mako.service dunst.service deadd-notification-center.service
+
+[Service]
+Type=simple
+
+# Configuration validation
+ExecStartPre=/bin/sh -c 'test -f %h/.config/swaync/config.json || { echo "swaync config not found"; exit 1; }'
+ExecStartPre=/bin/sh -c 'command -v jq >/dev/null && jq empty %h/.config/swaync/config.json || echo "jq not available for config validation"'
+
+# Main service command with clean termination
+ExecStart=/usr/bin/swaync
+ExecStop=/bin/sh -c 'swaync-client --close-all; killall -TERM swaync'
+
+# Graceful reload support
+ExecReload=/bin/sh -c 'swaync-client --reload-config && swaync-client --reload-css'
+
+# Process management with better shutdown handling
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=30
+TimeoutStopSec=15
+KillMode=mixed
+KillSignal=SIGTERM
+
+# Resource management
+Slice=app.slice
+
+# Environment (backup - UWSM should handle this via your scripts)
+Environment=XDG_CONFIG_HOME=%h/.config
+Environment=XDG_CACHE_HOME=%h/.cache  
+Environment=XDG_DATA_HOME=%h/.local/share
+Environment=GSETTINGS_BACKEND=memory
+Environment=DCONF_PROFILE=/dev/null
+Environment=GTK_USE_PORTAL=0
+Environment=GDK_BACKEND=wayland,x11
+Environment=G_MESSAGES_DEBUG=
+
+# Minimal security hardening
+NoNewPrivileges=yes
+PrivateTmp=yes
+ReadWritePaths=%h/.config/swaync %h/.cache
+
+[Install]
+WantedBy=default.target

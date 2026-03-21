@@ -1,0 +1,11 @@
+[Unit]
+Description=Process Optimization for Hyprland Session
+After=hyprland-session.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/hypr/scripts/runtime/process_optimization.sh
+Environment=HOME=%h
+
+[Install]
+WantedBy=hyprland-session.target

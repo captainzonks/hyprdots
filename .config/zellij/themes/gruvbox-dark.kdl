@@ -1,0 +1,36 @@
+// Gruvbox Dark theme for Zellij
+// Based on the original Gruvbox Dark color scheme by Pavel Pertsev
+// https://github.com/morhetz/gruvbox
+//
+// This theme uses the original Gruvbox Dark palette which has been extensively
+// tested for readability and contrast. All color combinations meet WCAG contrast
+// guidelines for accessibility.
+//
+// Color reference:
+// - bg:      #282828 - Dark background (neutral dark gray-brown)
+// - fg:      #ebdbb2 - Light cream foreground (warm off-white)
+// - black:   #3c3836 - Slightly lighter than bg for subtle contrast
+// - red:     #fb4934 - Bright red (error states, alerts)
+// - green:   #b8bb26 - Bright green (success states, active)
+// - yellow:  #fabd2f - Bright yellow (warnings, highlights)
+// - blue:    #83a598 - Muted blue (info, calm accent)
+// - magenta: #d3869b - Muted pink (special states)
+// - cyan:    #8ec07c - Muted cyan (secondary accent)
+// - white:   #ebdbb2 - Same as fg for consistency
+// - orange:  #fe8019 - Bright orange (primary accent, focus)
+
+themes {
+    gruvbox-dark {
+        fg "#ebdbb2"
+        bg "#282828"
+        black "#3c3836"
+        red "#fb4934"
+        green "#b8bb26"
+        yellow "#fabd2f"
+        blue "#83a598"
+        magenta "#d3869b"
+        cyan "#8ec07c"
+        white "#ebdbb2"
+        orange "#fe8019"
+    }
+}

@@ -1,0 +1,55 @@
+# ~/.config/systemd/user/waybar.service
+# Waybar service properly integrated with UWSM
+# Documentation: https://wiki.archlinux.org/title/Waybar#Systemd_integration
+
+[Unit]
+Description=Highly customizable Wayland bar for Hyprland
+Documentation=man:waybar(5)
+# Proper dependency chain for UWSM sessions
+# NOTE: Using wayland-session target instead of graphical-session.target to
+# avoid ordering cycles that prevent session shutdown (see spartan_sync_notes.md)
+After=wayland-session@hyprland.desktop.target
+PartOf=wayland-session@hyprland.desktop.target
+# Ensure graphics and audio are available
+Wants=pipewire.service
+
+# Conflict resolution - only run one waybar instance
+Conflicts=waybar@.service
+
+[Service]
+Type=exec
+ExecStart=/usr/bin/waybar
+ExecReload=/bin/kill -SIGUSR2 $MAINPID
+Restart=on-failure
+RestartSec=3
+KillMode=mixed
+TimeoutStopSec=10
+
+# Resource limits (raised from 64M/128M — 64M caused waybar to become
+# completely unresponsive on Argonaut; waybar regularly uses ~70M+)
+MemoryHigh=256M
+MemoryMax=512M
+MemoryAccounting=true
+
+# CPU priority and scheduling
+# Negative nice value = higher priority
+Nice=-2
+CPUAccounting=true
+
+# I/O scheduling optimization (might conflict with audio)
+# Class 2 = Best Effort, Priority 4 = medium-high
+# IOSchedulingClass=2
+# IOSchedulingPriority=4
+
+# Process group management
+# This ensures waybar and its children are managed together
+KillMode=control-group
+
+# Security hardening (optional, may need adjustment based on waybar modules)
+# NoNewPrivileges=true
+# PrivateTmp=true
+# ProtectSystem=strict
+# ProtectHome=read-only
+
+[Install]
+WantedBy=wayland-session@hyprland.desktop.target

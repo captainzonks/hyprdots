@@ -1,0 +1,166 @@
+# ~/.config/kanshi/config
+#
+# Enhanced Kanshi Configuration with Dynamic Foot Font Management
+# Version: 2.0.0 - Integrated with foot_font_manager.sh
+# Documentation: https://github.com/emersion/kanshi
+#
+# Last updated: 2025-09-11
+
+# =============================================================================
+# OUTPUT DEFINITIONS
+# =============================================================================
+
+# External monitor (LG ULTRAGEAR via USB-C)
+output "LG Electronics LG ULTRAGEAR REDACTED_SERIAL" {
+    mode 2560x1440@120
+    position 0,0
+    scale 1.0
+    adaptive_sync on
+    alias $EXTERNAL_LG
+}
+
+# Laptop display (ThinkPad E15)
+output "Lenovo Group Limited 0x40BA Unknown" {
+    mode 1920x1080@60
+    position 0,0
+    scale 1.0
+    alias $LAPTOP_LENOVO
+}
+
+#----- Backup definitions using connector names
+output "DP-1" {
+    mode 2560x1440@120
+    position 0,0
+    scale 1.0
+    adaptive_sync on
+    alias $EXTERNAL_CONNECTOR
+}
+
+output "eDP-1" {
+    mode 1920x1080@60
+    position 0,0
+    scale 1.0
+    alias $LAPTOP_CONNECTOR
+}
+
+# =============================================================================
+# PROFILE DEFINITIONS WITH DYNAMIC FONT MANAGEMENT
+# =============================================================================
+
+profile "external display" {
+    output $EXTERNAL_LG enable
+    output $LAPTOP_LENOVO disable
+    
+    # Monitor management
+    exec notify-send -i display "Kanshi" "External monitor active" --expire-time=2000
+    exec sleep 0.5 && hyprctl dispatch focusmonitor DP-1
+    
+    # Dynamic font size adjustment for external monitor
+    exec sleep 1 && ~/.config/hypr/scripts/runtime/foot_font_manager.sh external
+}
+
+profile "laptop only" {
+    output $LAPTOP_LENOVO enable
+    
+    # Monitor management  
+    exec notify-send -i laptop "Kanshi" "Laptop display active" --expire-time=2000
+    exec sleep 0.5 && hyprctl dispatch focusmonitor eDP-1
+    exec sleep 1 && ~/.config/hypr/scripts/runtime/migrate_workspaces_to_laptop.sh
+    
+    # Dynamic font size adjustment for laptop screen
+    exec sleep 2 && ~/.config/hypr/scripts/runtime/foot_font_manager.sh laptop
+}
+
+# =============================================================================
+# FALLBACK PROFILES (using connector names for broader compatibility)
+# =============================================================================
+
+profile "external connector fallback" {
+    output $EXTERNAL_CONNECTOR enable
+    output $LAPTOP_CONNECTOR disable
+    
+    exec notify-send -i display "Kanshi" "External monitor active (connector fallback)" --expire-time=2000
+    exec sleep 0.5 && hyprctl dispatch focusmonitor DP-1
+    exec sleep 1 && ~/.config/hypr/scripts/runtime/foot_font_manager.sh external
+}
+
+# =============================================================================
+# HDTV PROFILES (1080p and 4K)
+# =============================================================================
+# Generic HDTV support using resolution-based matching
+# To identify your specific HDTV, run: hyprctl monitors all
+# Look for the output name and manufacturer in the EDID info
+
+# --- 1080p HDTV Profiles ---
+
+profile "hdtv 1080p single" {
+    output DP-1 mode 1920x1080@60 position 0,0 scale 1.0
+    output eDP-1 disable
+
+    exec notify-send -i display "Kanshi" "1080p HDTV active (single display)" --expire-time=2000
+    exec sleep 0.5 && hyprctl dispatch focusmonitor DP-1
+    exec sleep 1 && ~/.config/hypr/scripts/runtime/foot_font_manager.sh external
+}
+
+profile "hdtv 1080p dual" {
+    output DP-1 mode 1920x1080@60 position 1920,0 scale 1.0
+    output eDP-1 mode 1920x1080@60 position 0,0 scale 1.0
+
+    exec notify-send -i display "Kanshi" "1080p HDTV + Laptop (dual display)" --expire-time=2000
+    exec sleep 0.5 && hyprctl dispatch focusmonitor DP-1
+    exec sleep 1 && ~/.config/hypr/scripts/runtime/foot_font_manager.sh external
+}
+
+# --- 4K HDTV Profiles ---
+
+profile "hdtv 4k single" {
+    output DP-1 mode 3840x2160@60 position 0,0 scale 1.5
+    output eDP-1 disable
+
+    exec notify-send -i display "Kanshi" "4K HDTV active (single display, 1.5x scale)" --expire-time=2000
+    exec sleep 0.5 && hyprctl dispatch focusmonitor DP-1
+    exec sleep 1 && ~/.config/hypr/scripts/runtime/foot_font_manager.sh external
+}
+
+profile "hdtv 4k dual" {
+    output DP-1 mode 3840x2160@60 position 1920,0 scale 1.5
+    output eDP-1 mode 1920x1080@60 position 0,0 scale 1.0
+
+    exec notify-send -i display "Kanshi" "4K HDTV + Laptop (dual display)" --expire-time=2000
+    exec sleep 0.5 && hyprctl dispatch focusmonitor DP-1
+    exec sleep 1 && ~/.config/hypr/scripts/runtime/foot_font_manager.sh external
+}
+
+# Alternative 4K profiles with different scaling options
+# Uncomment if 1.5x scaling doesn't work well for your setup
+
+# profile "hdtv 4k single no-scale" {
+#     output DP-1 mode 3840x2160@60 position 0,0 scale 1.0
+#     output eDP-1 disable
+#
+#     exec notify-send -i display "Kanshi" "4K HDTV active (no scaling)" --expire-time=2000
+#     exec sleep 0.5 && hyprctl dispatch focusmonitor DP-1
+#     exec sleep 1 && ~/.config/hypr/scripts/runtime/foot_font_manager.sh external
+# }
+
+# profile "hdtv 4k single 2x-scale" {
+#     output DP-1 mode 3840x2160@60 position 0,0 scale 2.0
+#     output eDP-1 disable
+#
+#     exec notify-send -i display "Kanshi" "4K HDTV active (2x scale - 1080p equivalent)" --expire-time=2000
+#     exec sleep 0.5 && hyprctl dispatch focusmonitor DP-1
+#     exec sleep 1 && ~/.config/hypr/scripts/runtime/foot_font_manager.sh external
+# }
+
+# =============================================================================
+# FALLBACK PROFILES (using connector names for broader compatibility)
+# =============================================================================
+
+profile "laptop connector fallback" {
+    output $LAPTOP_CONNECTOR enable
+
+    exec notify-send -i laptop "Kanshi" "Laptop display active (connector fallback)" --expire-time=2000
+    exec sleep 0.5 && hyprctl dispatch focusmonitor eDP-1
+    exec sleep 1 && ~/.config/hypr/scripts/runtime/migrate_workspaces_to_laptop.sh
+    exec sleep 2 && ~/.config/hypr/scripts/runtime/foot_font_manager.sh laptop
+}

@@ -1,0 +1,11 @@
+configuration {
+    display-ssh:    "";
+    display-run:    "";
+    display-drun:   "";
+    display-window: "";
+    display-combi:  "";
+    show-icons:     true;
+    font: "Iosevka Nerd Font Propo Bold 14";
+}
+
+@theme "~/.config/rofi/themes/paper.rasi"

@@ -1,0 +1,21 @@
+@import url('../../colors/gruvbox-dark-palette.css');
+/* @import url('../../colors/gruvbox-light-palette.css'); */
+
+/*	COLOR BINDS
+	-----------			*/
+@define-color waybar @bg;
+@define-color text-main @fg;
+@define-color text-opposite @bg;
+@define-color text-alert @red2;
+@define-color alert @red1;
+@define-color warning @orange1;
+@define-color ok @aqua2;
+@define-color workspaces @yellow1;
+@define-color workspaces-hover @yellow2;
+@define-color day @orange1;
+@define-color time @orange2;
+@define-color date @orange1;
+@define-color backlight @bg-gray;
+@define-color network @bg4;
+@define-color audio @bg3;
+@define-color battery @bg2;

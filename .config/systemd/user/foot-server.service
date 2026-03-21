@@ -1,0 +1,52 @@
+[Unit]
+Description=Foot Terminal Server
+Documentation=man:foot(1) man:foot-server(1)
+After=wayland-session@hyprland.desktop.target
+PartOf=wayland-session@hyprland.desktop.target
+Conflicts=foot@.service
+
+[Service]
+# FIXED: Changed from Type=notify to Type=simple
+Type=simple
+ExecStart=/usr/bin/foot --server
+ExecReload=/bin/kill -USR1 $MAINPID
+
+# Restart configuration
+Restart=on-failure
+RestartSec=2
+StartLimitInterval=60
+StartLimitBurst=5
+
+# FIXED: Reduced timeouts
+TimeoutStartSec=10
+TimeoutStopSec=5
+
+# Process management
+KillMode=control-group
+
+# Resource limits (raised from 128M/256M — foot-server cgroup includes all
+# footclient windows and child processes; 128M caused lockups on Argonaut)
+MemoryHigh=512M
+MemoryMax=1G
+MemoryAccounting=true
+Nice=-1
+CPUAccounting=true
+
+# Environment
+Environment=WAYLAND_DISPLAY=wayland-1
+Environment=XDG_SESSION_TYPE=wayland
+
+# Runtime management
+RuntimeDirectory=foot
+RuntimeDirectoryMode=0755
+
+# Cleanup on stop
+ExecStopPost=/bin/rm -f %t/foot-server.sock
+
+# Security hardening
+# NoNewPrivileges=true
+PrivateNetwork=false
+PrivateDevices=false
+
+[Install]
+WantedBy=wayland-session@hyprland.desktop.target

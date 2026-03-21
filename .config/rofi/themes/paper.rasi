@@ -1,0 +1,108 @@
+/**
+ * Paper - Minimal monochromatic theme for Rofi
+ * Matches the paper theme for Zellij
+ *
+ * Philosophy: Clean, readable, minimal. Like a well-designed paper form.
+ * Uses cream and warm gray tones exclusively for a neutral backdrop.
+ *
+ * Color palette:
+ * - background:     #1d1d1d - Charcoal paper (dark warm gray)
+ * - background-alt: #2a2826 - Slightly lighter for input area
+ * - foreground:     #e8dcc4 - Aged cream (warm off-white)
+ * - selected:       #8a8884 - Warm mid-gray for selection
+ * - active:         #7a7874 - Slightly darker warm gray
+ * - urgent:         #9a9890 - Lighter warm gray
+ */
+
+* {
+    background:     #1d1d1d;
+    background-alt: #2a2826;
+    foreground:     #e8dcc4;
+    selected:       #8a8884;
+    active:         #7a7874;
+    urgent:         #9a9890;
+}
+
+* {
+    background-color: @background;
+}
+
+window {
+    height: 600;
+    width: 600;
+    border: 2;
+    border-radius: 12;
+    border-color: @selected;
+    background-color: @background;
+}
+
+mainbox {
+    spacing: 0;
+    children: [inputbar, message, listview];
+    background-color: @background;
+}
+
+inputbar {
+    color: @foreground;
+    padding: 14;
+    background-color: @background-alt;
+    border: 1;
+    border-color: @selected;
+    border-radius: 12 12 0 0;
+    children: [prompt, entry];
+    spacing: 10;
+}
+
+prompt {
+    enabled: true;
+    background-color: inherit;
+    text-color: @foreground;
+}
+
+entry {
+    placeholder: "Search...";
+    placeholder-color: @active;
+    background-color: inherit;
+    text-color: @foreground;
+}
+
+message {
+    padding: 10;
+    background-color: @background-alt;
+    text-color: @foreground;
+}
+
+listview {
+    padding: 8;
+    border-radius: 0 0 12 12;
+    border: 0;
+    background-color: @background;
+    scrollbar: true;
+}
+
+scrollbar {
+    handle-color: @selected;
+    handle-width: 8;
+    background-color: @background-alt;
+}
+
+element {
+    padding: 8;
+    border-radius: 8;
+    text-color: @foreground;
+}
+
+element selected {
+    background-color: @selected;
+    text-color: @background;
+}
+
+element-text {
+    background-color: inherit;
+    text-color: inherit;
+}
+
+element-icon {
+    size: 24;
+    background-color: inherit;
+}
