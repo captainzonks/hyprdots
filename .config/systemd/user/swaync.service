@@ -1,0 +1,42 @@
+#==========================================================#
+#                   SWAYNC NOTIFICATIONS                   #
+#==========================================================#
+# File: swaync.service
+# Purpose: SwayNC notification daemon
+# Last Updated: 2026-03-20
+#==========================================================#
+
+[Unit]
+Description=SwayNC notification daemon
+Documentation=man:swaync(1) https://github.com/ErikReider/SwayNotificationCenter
+After=graphical-session-pre.target
+PartOf=default.target
+After=pipewire.service pipewire-pulse.service
+Conflicts=mako.service dunst.service deadd-notification-center.service
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sh -c 'test -f %h/.config/swaync/config.json || { echo "swaync config not found"; exit 1; }'
+ExecStart=/usr/bin/swaync
+ExecStop=/bin/sh -c 'swaync-client --close-all; killall -TERM swaync'
+ExecReload=/bin/sh -c 'swaync-client --reload-config && swaync-client --reload-css'
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=30
+TimeoutStopSec=15
+KillMode=mixed
+KillSignal=SIGTERM
+Slice=app.slice
+Environment=XDG_CONFIG_HOME=%h/.config
+Environment=XDG_CACHE_HOME=%h/.cache
+Environment=XDG_DATA_HOME=%h/.local/share
+Environment=GSETTINGS_BACKEND=memory
+Environment=DCONF_PROFILE=/dev/null
+Environment=GTK_USE_PORTAL=0
+Environment=GDK_BACKEND=wayland,x11
+NoNewPrivileges=yes
+PrivateTmp=yes
+ReadWritePaths=%h/.config/swaync %h/.cache
+
+[Install]
+WantedBy=default.target

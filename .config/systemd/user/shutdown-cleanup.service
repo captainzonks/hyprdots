@@ -1,0 +1,15 @@
+[Unit]
+Description=Clean shutdown for Hyprland session
+DefaultDependencies=false
+Before=shutdown.target reboot.target halt.target
+After=hyprland-session.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/bin/true
+ExecStop=/bin/sh -c 'pkill -TERM -f "swaybg"; pkill -TERM -f "hyprsunset"'
+TimeoutStopSec=10
+
+[Install]
+WantedBy=hyprland-session.target

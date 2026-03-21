@@ -1,0 +1,117 @@
+{
+  "$schema": "/etc/xdg/swaync/configSchema.json",
+  "positionX": "right",
+  "positionY": "top",
+  "layer": "top",
+  "control-center-layer": "overlay",
+  "layer-shell": true,
+  "layer-shell-cover-screen": false,
+  "control-center-width": 380,
+  "control-center-height": 650,
+  "control-center-margin-top": 10,
+  "control-center-margin-bottom": 10,
+  "control-center-margin-right": 10,
+  "control-center-margin-left": 0,
+  "notification-window-width": 380,
+  "notification-body-image-height": 120,
+  "notification-body-image-width": 200,
+  "timeout": 8,
+  "timeout-low": 4,
+  "timeout-critical": 0,
+  "fit-to-screen": false,
+  "keyboard-shortcuts": true,
+  "image-visibility": "when-available",
+  "transition-time": 200,
+  "hide-on-clear": false,
+  "hide-on-action": true,
+  "script-fail-notify": true,
+  "notification-2fa-action": true,
+  "notification-inline-replies": false,
+  "widgets": [
+    "title",
+    "dnd",
+    "buttons-grid",
+    "mpris",
+    "volume",
+    "notifications"
+  ],
+  "widget-config": {
+    "title": {
+      "text": "Notifications",
+      "clear-all-button": true,
+      "button-text": "󰆴 Clear All"
+    },
+    "dnd": {
+      "text": "󰂛  Do Not Disturb"
+    },
+    "mpris": {},
+    "volume": {
+      "label": "󰕾 "
+    },
+    "buttons-grid": {
+      "actions": [
+        {
+          "label": "󰝟",
+          "command": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+          "type": "toggle",
+          "update-command": "wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED && echo true || echo false",
+          "active": false
+        },
+        {
+          "label": "󰍭",
+          "command": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+          "type": "toggle",
+          "update-command": "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED && echo true || echo false",
+          "active": false
+        },
+        {
+          "label": "󰈀",
+          "command": "footclient nmtui",
+          "type": "normal"
+        },
+        {
+          "label": "󰂯",
+          "command": "blueman-manager",
+          "type": "normal"
+        },
+        {
+          "label": "󰤄",
+          "command": "swaync-client -d",
+          "type": "toggle",
+          "update-command": "swaync-client -D | grep -q 'true' && echo true || echo false",
+          "active": false
+        },
+        {
+          "label": "󰈙",
+          "command": "footclient -e helix ~/Documents/",
+          "type": "normal"
+        },
+        {
+          "label": "󰒓",
+          "command": "footclient -e zellij attach main || zellij -s main",
+          "type": "normal"
+        },
+        {
+          "label": "󰖟",
+          "command": "firefox",
+          "type": "normal"
+        },
+        {
+          "label": "󰌾",
+          "command": "hyprlock",
+          "type": "normal"
+        },
+        {
+          "label": "󰜉",
+          "command": "systemctl reboot",
+          "type": "normal"
+        },
+        {
+          "label": "󰐥",
+          "command": "systemctl poweroff",
+          "type": "normal"
+        }
+      ]
+    }
+  }
+}

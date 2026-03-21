@@ -1,0 +1,12 @@
+# Kanshi Configuration - Argonaut Desktop
+# Dynamic output management for Hyprland
+
+# Single 4K TV on DP-3
+profile single {
+    output DP-3 mode 3840x2160@60 scale 2.0 position 0,0
+}
+
+# Fallback - any single output
+profile fallback {
+    output * mode preferred position 0,0
+}

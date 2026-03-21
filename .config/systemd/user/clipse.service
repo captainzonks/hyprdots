@@ -1,0 +1,22 @@
+#==========================================================#
+#                    CLIPSE CLIPBOARD                      #
+#==========================================================#
+# File: clipse.service
+# Purpose: Clipboard history manager for Wayland
+# Last Updated: 2026-03-20
+#==========================================================#
+
+[Unit]
+Description=Clipboard history manager for Wayland
+Documentation=https://github.com/savedra1/clipse
+After=wayland-session@hyprland.desktop.target
+
+[Service]
+Type=exec
+ExecCondition=/lib/systemd/systemd-xdg-autostart-condition "wlroots:sway:Wayfire:labwc:Hyprland" ""
+ExecStart=clipse -listen
+Restart=on-failure
+Slice=app-graphical.slice
+
+[Install]
+WantedBy=wayland-session@hyprland.desktop.target

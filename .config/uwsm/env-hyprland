@@ -1,0 +1,12 @@
+# ~/.config/uwsm/env-hyprland
+# Hyprland-specific environment variables (Argonaut Desktop)
+
+# Hypr cursor
+export HYPRCURSOR_SIZE=24
+
+# Screenshots
+export HYPRSHOT_DIR="$HOME/Pictures/screenshots"
+
+# Rendering - NVIDIA
+export WLR_RENDERER="vulkan"
+export WLR_DRM_NO_ATOMIC="0"

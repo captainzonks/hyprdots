@@ -1,0 +1,15 @@
+[Unit]
+Description=Session health maintenance — reset failed units
+Documentation=man:systemd.service(5)
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c 'systemctl --user reset-failed 2>/dev/null || true'
+ExecCondition=/bin/bash -c '[[ -n "$(loginctl list-sessions --no-legend)" ]]'
+IOSchedulingClass=3
+Nice=15
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=default.target
