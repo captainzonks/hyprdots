@@ -41,7 +41,7 @@ alias boo='paru -R'
 alias yeet='paru -Rcs'
 alias lost='paru -Qdt'
 alias pclean='paru -Scc'
-alias pacnew='pacdiff -s'
+alias pacnew='DIFFPROG=meld pacdiff -s'
 
 #----- Apps
 alias ff='fastfetch'
@@ -51,6 +51,14 @@ alias bcat='bat --paging=never -l log' # for piping active stdout into bat for c
 
 # find captive portal for public wifi networks
 alias captive='curl -I http://detectportal.firefox.com/canonical.html'
+
+# convert png to svg
+alias tosvg='uv run https://raw.githubusercontent.com/nicobailon/png2svg/main/png2svg.py convert' # <image.png> <image.svg>
+
+#========# Hyprland #======================================#
+#==========================================================#
+export HYPR_CONFIG_HOME=${XDG_CONFIG_HOME}/hypr
+alias hdir="cd ${HYPR_CONFIG_HOME}"
 
 #GUI Applications
 
@@ -158,4 +166,5 @@ alias ddc='dot diff --cached'
 alias dl='dot log --oneline --graph --decorate'
 alias db='dot branch'
 alias dcheck='dot checkout'
+alias dsync='dot fetch origin && dot rebase origin/main && dot push --force-with-lease && hyprctl reload'
 
