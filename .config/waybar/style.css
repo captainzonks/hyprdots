@@ -1,4 +1,4 @@
-@import url('./colors.css');
+@import url('./colors/gruvbox-color-binds.css');
 
 * {
   border: 0px;
