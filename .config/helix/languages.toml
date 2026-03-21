@@ -1,0 +1,4 @@
+[[language]]
+name = "yaml"
+auto-format = true
+formatter = { command = 'prettier', args = ["--parser", "yaml"] }

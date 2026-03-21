@@ -1,0 +1,142 @@
+# ==============================================================================
+# .GITIGNORE - hyprdots bare repo
+# ==============================================================================
+# Description: Ignore everything by default, explicitly allow tracked configs.
+#              This prevents secrets, caches, and noise from leaking into a
+#              public dotfiles repo.
+# Author: Matt Barham
+# Created: 2026-03-21
+# Modified: 2026-03-21
+# Version: 1.0.0
+# ==============================================================================
+
+# Ignore everything
+*
+
+# --------------------------------------------------------------------------
+# Allow dotfiles infrastructure
+# --------------------------------------------------------------------------
+!.gitignore
+
+# --------------------------------------------------------------------------
+# Shared configs (main branch)
+# --------------------------------------------------------------------------
+
+# ZSH
+!.config/zsh/
+!.config/zsh/**
+
+# Git
+!.config/git/
+!.config/git/config
+
+# Helix
+!.config/helix/
+!.config/helix/**
+
+# Starship
+!.config/starship/
+!.config/starship/**
+
+# Terminal emulators
+!.config/foot/
+!.config/foot/foot.ini
+!.config/kitty/
+!.config/kitty/kitty.conf
+
+# CLI tools
+!.config/lsd/
+!.config/lsd/**
+!.config/bottom/
+!.config/bottom/**
+!.config/fd/
+!.config/fd/**
+!.config/procs/
+!.config/procs/**
+!.config/bat/
+!.config/bat/**
+!.config/fastfetch/
+!.config/fastfetch/**
+
+# GitHub CLI (config only, NOT hosts.yml)
+!.config/gh/
+!.config/gh/config.yml
+.config/gh/hosts.yml
+
+# Clipboard manager
+!.config/clipse/
+!.config/clipse/config.json
+!.config/clipse/custom_theme.json
+# Exclude clipse runtime data
+.config/clipse/clipboard_history.json
+.config/clipse/clipse.log
+.config/clipse/tmp_files/
+
+# Logout menu
+!.config/wlogout/
+!.config/wlogout/**
+
+# Color palettes
+!.config/colors/
+!.config/colors/**
+
+# GTK theming
+!.config/gtk-3.0/
+!.config/gtk-3.0/settings.ini
+!.config/gtk-4.0/
+!.config/gtk-4.0/settings.ini
+# Exclude GTK runtime state
+.config/gtk-3.0/bookmarks
+.config/gtk-4.0/bookmarks
+
+# Qt theming
+!.config/qt6ct/
+!.config/qt6ct/**
+
+# --------------------------------------------------------------------------
+# Machine-specific configs (argonaut/spartan branches)
+# --------------------------------------------------------------------------
+
+# Hyprland
+!.config/hypr/
+!.config/hypr/**
+
+# Waybar
+!.config/waybar/
+!.config/waybar/**
+
+# Kanshi
+!.config/kanshi/
+!.config/kanshi/**
+
+# UWSM
+!.config/uwsm/
+!.config/uwsm/**
+
+# SwayNC
+!.config/swaync/
+!.config/swaync/**
+
+# systemd user services (unit files only)
+!.config/systemd/
+!.config/systemd/user/
+!.config/systemd/user/*.service
+!.config/systemd/user/*.timer
+!.config/systemd/user/*.target
+# Exclude systemd symlink dirs
+.config/systemd/user/*.wants/
+
+# --------------------------------------------------------------------------
+# Always ignore (secrets, caches, runtime)
+# --------------------------------------------------------------------------
+.claude/
+.dotfiles/
+*.bak
+*.bak.*
+*.log
+*.swp
+*.tmp
+*~
+__pycache__/
+node_modules/
+.cache/

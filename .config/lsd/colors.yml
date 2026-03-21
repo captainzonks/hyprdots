@@ -1,0 +1,24 @@
+user: blue
+group: cyan
+permission:
+  read: yellow
+  write: cyan
+  exec: red
+  exec-sticky: magenta
+  no-access: dark_gray
+date:
+  hour-old: magenta
+  day-old: cyan
+  older: dark_gray
+size:
+  none: dark_gray
+  small: white
+  medium: cyan
+  large: blue
+inode:
+  valid: blue
+  invalid: dark_gray
+links:
+  valid: blue
+  invalid: dark_gray
+tree-edge: dark_gray
