@@ -5,8 +5,8 @@
 
 set -euo pipefail
 
-# Sony WX-1000XM4 MAC address (from your logs)
-SONY_MAC="REDACTED_BT_MAC"
+# Sony WH-1000XM4 MAC address — set SONY_BT_MAC in ~/.config/machine.env
+SONY_MAC="${SONY_BT_MAC:?Set SONY_BT_MAC in ~/.config/machine.env}"
 DEVICE_NAME="Sony WH-1000XM4"
 
 # Enhanced connection function

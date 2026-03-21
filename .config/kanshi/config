@@ -11,7 +11,8 @@
 # =============================================================================
 
 # External monitor (LG ULTRAGEAR via USB-C)
-output "LG Electronics LG ULTRAGEAR REDACTED_SERIAL" {
+# Replace YOUR_SERIAL with your monitor's serial: hyprctl monitors all
+output "LG Electronics LG ULTRAGEAR YOUR_SERIAL" {
     mode 2560x1440@120
     position 0,0
     scale 1.0

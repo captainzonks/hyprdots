@@ -13,6 +13,12 @@
 # - External tools initialized with proper error handling
 #==========================================================#
  
+#=====================# MACHINE SECRETS #=================#
+# Source machine-specific values (MAC addresses, hostnames, etc.)
+# This file is NOT tracked by the dotfiles repo
+#==========================================================#
+[[ -f "$XDG_CONFIG_HOME/machine.env" ]] && source "$XDG_CONFIG_HOME/machine.env"
+
 #=====================# GNOME KEYRING #===================#
 # Handled by systemd socket activation (gnome-keyring-daemon.socket)
 # Apps request secrets via D-Bus, systemd starts the daemon on demand
