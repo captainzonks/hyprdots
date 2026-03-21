@@ -27,11 +27,6 @@ alias zugins='him "$XDG_CONFIG_HOME/zsh/features/70-plugins.zsh"'
 
 #----- Zellij
 alias engage='eval "$(zellij setup --generate-auto-start zsh)"'
-alias pds='pdsync.sh --cleanup'
-alias pdu='pds -u'
-alias pdd='pds -D'
-alias pdbi='pds'
-alias pdresync='pds --resync'
 
 #----- Basic Commands
 alias cd='z'
