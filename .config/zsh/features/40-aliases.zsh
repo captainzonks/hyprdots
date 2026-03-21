@@ -146,3 +146,16 @@ alias gbd='git branch -d'
 alias grb='git rebase'
 alias grbi='git rebase -i'
 
+#----- Dotfiles (bare repo)
+alias dot='git --git-dir="$HOME/.dotfiles" --work-tree="$HOME"'
+alias ds='dot status'
+alias da='dot add -f'
+alias dc='dot commit -m'
+alias dp='dot push'
+alias dpl='dot pull'
+alias dd='dot diff'
+alias ddc='dot diff --cached'
+alias dl='dot log --oneline --graph --decorate'
+alias db='dot branch'
+alias dcheck='dot checkout'
+
