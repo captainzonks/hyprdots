@@ -18,35 +18,6 @@ hip() {
     fi
 }
 
-#========# Dotfiles Management #===========================#
-#==========================================================#
-
-# Legacy Spartan-Arch dotfiles git command (pre-hyprdots migration)
-dotf() {
-    /usr/bin/git --git-dir="${HOME}/.dotfiles-spartan-arch/" --work-tree="${HOME}" "$@"
-}
-
-# List all untracked files recursively, no filtering
-dotua() {
-    dotu '*/*'
-}
-
-# List untracked files and filter via excludes file
-dotu() {
-    local excludes_file="${HOME}/.config/dotfiles/excludes"
-    local exclude_patterns=()
-
-    # Read pathspec exclusion patterns
-    if [[ -f "$excludes_file" ]]; then
-        while IFS= read -r pattern; do
-            [[ -n "$pattern" && ! "$pattern" =~ ^[[:space:]]*# ]] && \
-                exclude_patterns+=("$pattern")
-        done < "$excludes_file"
-    fi
-
-    git ls-files --others --exclude-standard "${exclude_patterns[@]}" "$@"
-}
-
 #========# Gamescope & Game Launcher #=====================#
 #==========================================================#
 
