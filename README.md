@@ -169,6 +169,21 @@ The `dot` aliases are defined in `.config/zsh/features/40-aliases.zsh`:
 | `ddc` | `dot diff --cached` | View staged changes |
 | `dl` | `dot log --oneline --graph --decorate` | Commit history |
 | `db` | `dot branch` | List branches |
+| `dsync` | `dot fetch && rebase && push && hyprctl reload` | Sync with main and reload compositor |
+
+### Syncing shared changes
+
+On any machine, run `dsync` to pull the latest shared configs from `main`, rebase your machine branch on top, push, and reload Hyprland — all in one command:
+
+```bash
+dsync
+```
+
+This expands to:
+
+```bash
+dot fetch origin && dot rebase origin/main && dot push --force-with-lease && hyprctl reload
+```
 
 ### Propagating shared changes to main
 
@@ -196,10 +211,10 @@ dp --force-with-lease
 
 ### Pulling shared changes from another machine
 
+After someone pushes to `main`, pull the changes on every other machine:
+
 ```bash
-dot fetch origin
-dot rebase origin/main
-dp --force-with-lease
+dsync
 ```
 
 ## Shell structure
