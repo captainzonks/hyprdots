@@ -3,8 +3,15 @@
 [user]
 	email = matthew.barham@proton.me
 	name = Matthew Barham
+	signingkey = 5A732E8E59526D65
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[tag]
+	gpgSign = true
+[commit]
+	gpgSign = true
+[gpg]
+	program = gpg

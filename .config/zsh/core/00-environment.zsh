@@ -46,6 +46,7 @@ export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 # Terminal and shell utilities
 export TERMINFO="$XDG_DATA_HOME/terminfo"
 export TERMINFO_DIRS="$XDG_DATA_HOME/terminfo:/usr/share/terminfo"
+export COLORTERM=truecolor
 
 # History and state management
 export LESSHISTFILE="$XDG_STATE_HOME/less/history"
