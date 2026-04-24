@@ -214,7 +214,7 @@
         },
         "tooltip": true,
         "tooltip-format": "Audio: {desc}\nVolume: {volume}%\nNode: {node_name}",
-        "on-click": "uwsm app -- pwvucontrol",
+        "on-click": "uwsm app -- pavucontrol",
         "scroll-step": 2.0,
         "max-volume": 150,
         "interval": 1,
