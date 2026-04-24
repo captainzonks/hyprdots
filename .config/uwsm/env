@@ -29,8 +29,14 @@ export QT_QPA_PLATFORMTHEME="qt6ct"
 export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 export QT_AUTO_SCREEN_SCALE_FACTOR="1"
 export QT_STYLE_OVERRIDE=""
-export KDE_SESSION_VERSION="5"
-export KDE_FULL_SESSION="true"
+# NOTE: Do NOT export KDE_FULL_SESSION or KDE_SESSION_VERSION here.
+# QT_QPA_PLATFORMTHEME=qt6ct already handles Qt theming without
+# pretending to be a KDE Plasma session. Setting these causes
+# xdg-open (xdg-utils) to route URLs through a nonexistent
+# kde-open5 binary and exit 4 with no fallback, breaking link
+# handling in every Electron app launched by Hyprland (Signal,
+# Proton Mail, etc.). See xdg-open detectDE()/open_kde() at
+# /usr/bin/xdg-open lines 486, 742-755.
 
 # GTK
 export GDK_SCALE="1"
