@@ -39,7 +39,8 @@ export QT_STYLE_OVERRIDE=""
 # /usr/bin/xdg-open lines 486, 742-755.
 
 # GTK
-export GDK_SCALE="1"
+# GDK_SCALE intentionally unset — Wayland GTK apps read scale from compositor.
+# Explicitly setting =1 breaks Firefox xdg_popup geometry on scale=2.0 monitors.
 
 # Cursor
 export XCURSOR_SIZE="24"
