@@ -1,0 +1,12 @@
+[Unit]
+Description=Session health maintenance timer
+Requires=session-cleanup.service
+
+[Timer]
+OnBootSec=10min
+OnUnitActiveSec=30min
+WakeSystem=false
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

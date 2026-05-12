@@ -1,0 +1,31 @@
+#==========================================================#
+#                  FOOT TERMINAL SERVER                    #
+#==========================================================#
+# File: foot-server.service
+# Purpose: Foot terminal server for footclient connections
+# Last Updated: 2026-03-20
+#==========================================================#
+
+[Unit]
+Description=Foot Terminal Server
+Documentation=man:foot(1) man:foot-server(1)
+After=wayland-session@hyprland.desktop.target
+PartOf=wayland-session@hyprland.desktop.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/foot --server
+ExecReload=/bin/kill -USR1 $MAINPID
+
+Restart=on-failure
+RestartSec=2
+StartLimitInterval=60
+StartLimitBurst=5
+
+TimeoutStartSec=10
+TimeoutStopSec=5
+KillMode=mixed
+Nice=-1
+
+[Install]
+WantedBy=wayland-session@hyprland.desktop.target

@@ -1,0 +1,23 @@
+#==========================================================#
+#                   KANSHI OUTPUT MANAGER                  #
+#==========================================================#
+# File: kanshi.service
+# Purpose: Wayland output manager for display hotplug
+# Last Updated: 2026-03-20
+#==========================================================#
+
+[Unit]
+Description=Kanshi Wayland output manager
+Documentation=man:kanshi(1) man:kanshi(5)
+After=wayland-session@hyprland.desktop.target
+
+[Service]
+Type=exec
+ExecCondition=/lib/systemd/systemd-xdg-autostart-condition "wlroots:sway:Wayfire:labwc:Hyprland" ""
+ExecStart=/usr/bin/kanshi
+ExecReload=kill -SIGHUP $MAINPID
+Restart=on-failure
+Slice=background-graphical.slice
+
+[Install]
+WantedBy=wayland-session@hyprland.desktop.target
