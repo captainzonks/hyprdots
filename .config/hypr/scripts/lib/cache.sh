@@ -59,4 +59,8 @@ are_animations_disabled() { has_state "animations_disabled"; }
 set_animations_disabled() { write_state "animations_disabled" "1"; }
 set_animations_enabled() { delete_state "animations_disabled"; }
 
+is_hyprsunset_disabled() { has_state "hyprsunset_disabled"; }
+set_hyprsunset_disabled() { write_state "hyprsunset_disabled" "1"; }
+set_hyprsunset_enabled() { delete_state "hyprsunset_disabled"; }
+
 init_cache
