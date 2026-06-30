@@ -4,7 +4,7 @@
 # File: features/50-functions.zsh
 # Purpose: Define functions for use with ZSH
 # Dependencies: Core ZSH configuration
-# Last Updated: 2026-03-19
+# Last Updated: 2026-05-13
 # Documentation: Custom functions for daily workflow
 #==========================================================#
 
@@ -365,6 +365,59 @@ cleanup_system() {
         *)
             echo "Invalid option. Cleanup cancelled."
             return 1
+            ;;
+    esac
+}
+
+#========# ComfyUI #=======================================#
+#==========================================================#
+
+comfyui() {
+    local pid_file="/tmp/comfyui.pid"
+    local log_file="/tmp/comfyui.log"
+
+    case "${1:-start}" in
+        start)
+            if [[ -f "$pid_file" ]] && kill -0 "$(cat "$pid_file")" 2>/dev/null; then
+                echo "ComfyUI already running (PID $(cat "$pid_file"))"
+                return 1
+            fi
+            echo "Starting ComfyUI → http://localhost:8188"
+            nohup /home/barhamm/ComfyUI/.venv/bin/python3 /home/barhamm/ComfyUI/main.py \
+                --enable-manager \
+                --listen \
+                --output-directory /home/barhamm/ComfyUI-output \
+                > "$log_file" 2>&1 &
+            echo $! > "$pid_file"
+            echo "PID: $(cat "$pid_file") | Log: tail -f $log_file"
+            ;;
+        stop)
+            if [[ ! -f "$pid_file" ]]; then
+                echo "No PID file — ComfyUI not started via this function"
+                return 1
+            fi
+            local pid=$(cat "$pid_file")
+            if kill -0 "$pid" 2>/dev/null; then
+                kill -TERM "$pid"
+                rm -f "$pid_file"
+                echo "Stopped ComfyUI (PID $pid)"
+            else
+                rm -f "$pid_file"
+                echo "ComfyUI not running (stale PID file removed)"
+            fi
+            ;;
+        status)
+            if [[ -f "$pid_file" ]] && kill -0 "$(cat "$pid_file")" 2>/dev/null; then
+                echo "ComfyUI running — PID $(cat "$pid_file") — http://localhost:8188"
+            else
+                echo "ComfyUI not running"
+            fi
+            ;;
+        log)
+            tail -f "$log_file"
+            ;;
+        *)
+            echo "Usage: comfyui [start|stop|status|log]"
             ;;
     esac
 }

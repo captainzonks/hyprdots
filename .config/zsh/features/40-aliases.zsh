@@ -168,3 +168,25 @@ alias db='dot branch'
 alias dcheck='dot checkout'
 alias dsync='dot fetch origin && dot rebase origin/main && dot push --force-with-lease && hyprctl reload'
 
+#----- HDMI audio profile toggle (NVidia HDMI: 8ch pops, stereo clean)
+# Card matched by name (reboot-stable, unlike index).
+_hdmi_card="alsa_card.pci-0000_09_00.1"
+alias audio71="pactl set-card-profile \$_hdmi_card output:hdmi-surround71 && echo 'HDMI -> 7.1 surround'"
+alias audio2="pactl set-card-profile \$_hdmi_card output:hdmi-stereo && echo 'HDMI -> stereo'"
+# audio        -> flip profile (stereo <-> 7.1)
+# audio status -> print current profile
+audio() {
+  local cur
+  cur=$(pactl list cards 2>/dev/null | awk '/'"$_hdmi_card"'/{f=1} f&&/Active Profile:/{print $3; exit}')
+  if [[ -n "$1" ]]; then
+    echo "current: ${cur:-unknown}"
+  elif [[ "$cur" == "output:hdmi-surround71" ]]; then
+    pactl set-card-profile "$_hdmi_card" output:hdmi-stereo && echo 'HDMI -> stereo'
+  else
+    pactl set-card-profile "$_hdmi_card" output:hdmi-surround71 && echo 'HDMI -> 7.1 surround'
+  fi
+}
+
+
+#----- particle-simulation: boot sim (preset menu, skip Godot editor)
+alias psim='godot --path /home/barhamm/repos/particle-simulation/godot_project'
