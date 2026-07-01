@@ -78,6 +78,8 @@ alias gamehdr='gamescope -W 3840 -H 2160 -f --hdr-enabled -- steam -gamepadui'
 #==========================================================#
 alias wget='wget --hsts-file="$XDG_DATA_HOME/wget-hsts"'
 alias keychain='keychain --dir "$XDG_RUNTIME_DIR/keychain" --absolute'
+# Force libsecret backend: Hyprland unknown to Chromium/Electron -> plaintext store
+alias claude-desktop='claude-desktop --password-store=gnome-libsecret'
 
 #========# Editor #========================================#
 #==========================================================#
