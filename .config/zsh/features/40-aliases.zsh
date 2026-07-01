@@ -7,7 +7,13 @@
 # Last Updated: 2025-10-30
 # Documentation: https://zsh.sourceforge.io/Doc/Release/
 #==========================================================#
- 
+
+#========# Temp #==========================================#
+#==========================================================#
+
+# temporary alias due to AUR being out of date
+alias flutter='/home/barhamm/.local/share/flutter/bin/flutter'
+
 #========# Shell & Environment #===========================#
 #==========================================================#
  
@@ -60,6 +66,12 @@ alias tosvg='uv run https://raw.githubusercontent.com/nicobailon/png2svg/main/pn
 #==========================================================#
 export HYPR_CONFIG_HOME=${XDG_CONFIG_HOME}/hypr
 alias hdir="cd ${HYPR_CONFIG_HOME}"
+
+#----- Terminal Emulator
+alias foot='footclient'
+
+#----- Game Dev
+alias parsim='godot repos/particle-simulation/godot_project/project.godot'
 
 #========# App Helpers #===================================#
 #==========================================================#

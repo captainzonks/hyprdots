@@ -72,9 +72,9 @@ layout {
     //         command "btm"
     //     }
     // }
-    tab name="ENGINEERING" {
-        pane name="SUBSYSTEMS" {
-            command "yazi"
-        }
-    }
+    // tab name="ENGINEERING" {
+    //     pane name="SUBSYSTEMS" {
+    //         command "yazi"
+    //     }
+    // }
 }

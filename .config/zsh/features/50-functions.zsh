@@ -18,6 +18,30 @@ hip() {
     fi
 }
 
+#========# Dotfiles Management #===========================#
+#==========================================================#
+
+# List all untracked files recursively, no filtering
+dotua() {
+    dotu '*/*'
+}
+
+# List untracked files and filter via excludes file
+dotu() {
+    local excludes_file="${HOME}/.config/dotfiles/excludes"
+    local exclude_patterns=()
+
+    # Read pathspec exclusion patterns
+    if [[ -f "$excludes_file" ]]; then
+        while IFS= read -r pattern; do
+            [[ -n "$pattern" && ! "$pattern" =~ ^[[:space:]]*# ]] && \
+                exclude_patterns+=("$pattern")
+        done < "$excludes_file"
+    fi
+
+    git ls-files --others --exclude-standard "${exclude_patterns[@]}" "$@"
+}
+
 #========# Gamescope & Game Launcher #=====================#
 #==========================================================#
 
@@ -343,6 +367,85 @@ cleanup_system() {
             return 1
             ;;
     esac
+}
+
+#========# Media Conversion Functions #===================#
+#==========================================================#
+
+# Convert MP4 to GIF using ffmpeg with palette optimization
+# Usage: mp4togif <input.mp4> <output.gif> [fps] [scale]
+# fps defaults to 30, scale defaults to 320 (width; height auto-scaled)
+mp4togif() {
+    if (( $# < 2 )); then
+        echo "Usage: mp4togif <input.mp4> <output.gif> [fps] [scale]"
+        echo "  fps:   frames per second (default: 30)"
+        echo "  scale: output width in px, height auto-scaled (default: 320)"
+        return 1
+    fi
+
+    local input="$1"
+    local output="$2"
+    local fps="${3:-30}"
+    local scale="${4:-320}"
+
+    if [[ ! -f "$input" ]]; then
+        echo "Error: input file '$input' not found" >&2
+        return 1
+    fi
+
+    # Two-pass palette approach: generates optimal palette from source,
+    # then applies it — avoids ffmpeg's default 256-color dithering artifacts
+    ffmpeg -i "$input" \
+        -vf "fps=${fps},scale=${scale}:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" \
+        -loop 0 \
+        "$output"
+}
+
+# Convert MP4 to animated WebP using ffmpeg/libwebp
+# Usage: mp4towebp <input.mp4> <output.webp> [fps] [scale] [quality]
+# fps defaults to source rate (-1), scale defaults to -1 (native width),
+# quality defaults to 75 (0-100, higher = better quality, larger file)
+# WebP yields ~10x smaller files than GIF at equivalent quality with full color
+mp4towebp() {
+    if (( $# < 2 )); then
+        echo "Usage: mp4towebp <input.mp4> <output.webp> [fps] [scale] [quality]"
+        echo "  fps:     frames per second (default: source rate)"
+        echo "  scale:   output width in px, height auto-scaled (default: native)"
+        echo "  quality: 0-100, higher = better/larger (default: 75)"
+        return 1
+    fi
+
+    local input="$1"
+    local output="$2"
+    local fps="${3:--1}"
+    local scale="${4:--1}"
+    local quality="${5:-75}"
+
+    if [[ ! -f "$input" ]]; then
+        echo "Error: input file '$input' not found" >&2
+        return 1
+    fi
+
+    # Build filter chain conditionally so defaults preserve source properties
+    local vf=""
+    if [[ "$fps" != "-1" ]]; then
+        vf="fps=${fps}"
+    fi
+    if [[ "$scale" != "-1" ]]; then
+        [[ -n "$vf" ]] && vf="${vf},"
+        vf="${vf}scale=${scale}:-1:flags=lanczos"
+    fi
+
+    # compression_level 6 = max effort, preset picture = photographic content,
+    # -vsync 0 preserves variable frame timing, -an drops audio (WebP has no audio)
+    local ffmpeg_args=(-y -i "$input" -vcodec libwebp -lossless 0
+        -compression_level 6 -q:v "$quality" -loop 0 -preset picture -an -vsync 0)
+    if [[ -n "$vf" ]]; then
+        ffmpeg_args+=(-filter:v "$vf")
+    fi
+    ffmpeg_args+=("$output")
+
+    ffmpeg "${ffmpeg_args[@]}"
 }
 
 #========# Dynamic Function Loading #======================#

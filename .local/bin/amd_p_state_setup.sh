@@ -133,85 +133,12 @@ else
 fi
 
 echo ""
-echo -e "${BLUE}Step 4: Verification Setup${NC}"
-
-# Create verification script
-cat > /tmp/verify-uki-amd-pstate.sh << 'EOF'
-#!/bin/bash
-echo "=== UKI AMD P-State Verification ==="
-echo "Boot method: Unified Kernel Image"
-echo ""
-
-echo "Kernel command line (embedded in UKI):"
-cat /proc/cmdline
-echo ""
-
-if cat /proc/cmdline | grep -q "amd_pstate=active"; then
-    echo "✓ AMD P-State parameter found in kernel command line"
-else
-    echo "✗ AMD P-State parameter NOT found in kernel command line"
-    echo "  This indicates the UKI rebuild may have failed"
-    exit 1
-fi
-
-echo ""
-echo "Checking AMD P-State status after reboot:"
-if [[ -f /sys/devices/system/cpu/amd_pstate/status ]]; then
-    status=$(cat /sys/devices/system/cpu/amd_pstate/status)
-    echo "AMD P-State status: $status"
-    
-    case "$status" in
-        "active")
-            echo "✓ AMD P-State EPP (Energy Performance Preference) active"
-            echo "✓ Hardware-managed frequency scaling enabled"
-            echo "✓ Optimal configuration for battery life achieved"
-            ;;
-        "passive")
-            echo "⚠ AMD P-State in passive mode"
-            echo "  Check BIOS CPPC settings"
-            ;;
-        "disable")
-            echo "✗ AMD P-State disabled despite kernel parameter"
-            echo "  Check BIOS CPPC support or hardware compatibility"
-            ;;
-    esac
-else
-    echo "✗ AMD P-State interface not available"
-    echo "  Reboot required or hardware not supported"
-fi
-
-echo ""
-echo "Current CPU frequency driver:"
-cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_driver 2>/dev/null || echo "Not available"
-
-if [[ -f /sys/devices/system/cpu/cpu0/cpufreq/energy_performance_preference ]]; then
-    echo "Current EPP setting:"
-    cat /sys/devices/system/cpu/cpu0/cpufreq/energy_performance_preference
-fi
-EOF
-
-chmod +x /tmp/verify-uki-amd-pstate.sh
-
-echo -e "${GREEN}✓ Verification script created: /tmp/verify-uki-amd-pstate.sh${NC}"
-
-echo ""
 echo -e "${BLUE}=== Summary ===${NC}"
 echo "✓ Kernel command line updated with amd_pstate=active"
 echo "✓ Unified Kernel Images rebuilt with new parameters"
-echo "✓ Backup of original UKI files created"
-echo "✓ Verification script prepared"
+echo "✓ Backup of original UKI files created in /boot/EFI/Linux/backup/"
 echo ""
 echo -e "${YELLOW}Next steps:${NC}"
 echo "1. Reboot your system"
-echo "2. Run: /tmp/verify-uki-amd-pstate.sh"
-echo "3. Apply the TLP EPP configuration if verification succeeds"
-echo ""
-echo -e "${BLUE}Why UKI is excellent for your setup:${NC}"
-echo "• Single signed binary - harder to tamper with"
-echo "• No separate bootloader configuration files to secure"
-echo "• Faster boot times (UEFI loads everything at once)"
-echo "• Simpler boot chain with fewer failure points"
-echo "• Better integration with Secure Boot"
-echo ""
-echo "Your kernel parameters are now permanently embedded in the boot image,"
-echo "making them tamper-resistant and eliminating configuration drift issues."
+echo "2. Run: power_diagnostic.sh to verify P-State status and EPP settings"
+echo "3. Confirm TLP picks up the active-mode driver: sudo tlp-stat -p"

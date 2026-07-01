@@ -136,6 +136,15 @@ set_animations_enabled() {
     delete_state "animations_disabled"
 }
 
+# Check if hyprsunset night filter is disabled
+is_hyprsunset_disabled() { has_state "hyprsunset_disabled"; }
+
+# Disable hyprsunset night filter (set state)
+set_hyprsunset_disabled() { write_state "hyprsunset_disabled" "1"; }
+
+# Enable hyprsunset night filter (clear state)
+set_hyprsunset_enabled() { delete_state "hyprsunset_disabled"; }
+
 # Clean old cache files (older than N days)
 # Usage: clean_cache_older_than 7
 clean_cache_older_than() {

@@ -5,9 +5,11 @@
 Description=SwayNC notification daemon
 Documentation=man:swaync(1) https://github.com/ErikReider/SwayNotificationCenter
 
-# SIMPLIFIED DEPENDENCIES - avoid cycles with graphical-session.target
-After=graphical-session-pre.target
-PartOf=default.target
+# Wait until Hyprland has started and exported WAYLAND_DISPLAY into the user
+# systemd env; otherwise the daemon exits with "Failed to open display".
+Requisite=graphical-session.target
+After=graphical-session.target
+PartOf=graphical-session.target
 
 # Audio dependency for notification sounds (optional)
 After=pipewire.service pipewire-pulse.service
@@ -56,4 +58,4 @@ PrivateTmp=yes
 ReadWritePaths=%h/.config/swaync %h/.cache
 
 [Install]
-WantedBy=default.target
+WantedBy=graphical-session.target
