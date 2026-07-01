@@ -124,8 +124,9 @@ alias sustop='systemctl --user stop'
 alias susrst='systemctl --user restart'
 alias susreset='systemctl --user reset-failed'
 
-#----- Power/State
-alias shutdown='systemctl poweroff'
+#----- Power/State (safe: graceful client termination via power.sh)
+alias shutdown='~/.config/hypr/scripts/runtime/power.sh shutdown'
+alias reboot='~/.config/hypr/scripts/runtime/power.sh reboot'
 alias suspend='systemctl suspend'
 alias hibernate='systemctl hibernate'
 alias gowindows='systemctl reboot --boot-loader-entry=windows.conf'
