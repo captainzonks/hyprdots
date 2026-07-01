@@ -72,6 +72,8 @@ alias foot='footclient'
 
 #----- Game Dev
 alias parsim='godot repos/particle-simulation/godot_project/project.godot'
+# particle-simulation: boot sim (preset menu, skip Godot editor)
+alias psim='godot --path /home/barhamm/repos/particle-simulation/godot_project'
 
 #========# App Helpers #===================================#
 #==========================================================#
